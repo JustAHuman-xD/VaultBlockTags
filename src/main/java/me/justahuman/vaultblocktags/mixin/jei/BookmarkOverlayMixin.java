@@ -1,6 +1,7 @@
 package me.justahuman.vaultblocktags.mixin.jei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import me.justahuman.vaultblocktags.api.BookmarkExtension;
 import mezz.jei.Internal;
 import mezz.jei.bookmarks.BookmarkList;
 import mezz.jei.common.network.IConnectionToServer;
@@ -17,6 +18,7 @@ import mezz.jei.input.mouse.handlers.CheatInputHandler;
 import mezz.jei.input.mouse.handlers.CombinedInputHandler;
 import mezz.jei.input.mouse.handlers.ProxyInputHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,7 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BookmarkOverlay.class)
-public abstract class BookmarkOverlayMixin {
+public abstract class BookmarkOverlayMixin implements BookmarkExtension {
     @Unique private GhostIngredientDragManager vaultblocktags$ghostIngredientDragManager;
 
     @Shadow(remap = false) @Final private IngredientGridWithNavigation contents;
@@ -40,10 +42,13 @@ public abstract class BookmarkOverlayMixin {
         this.vaultblocktags$ghostIngredientDragManager = new GhostIngredientDragManager(this.contents, guiScreenHelper, Internal.getRegisteredIngredients(), this.worldConfig);
     }
 
-    @Inject(at = @At("TAIL"), method = "drawScreen", remap = false)
-    public void drawScreen(Minecraft minecraft, PoseStack poseStack, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
+    @Override
+    public void vaultblocktags$renderForeground(Minecraft minecraft, PoseStack poseStack, AbstractContainerScreen<?> gui, int mouseX, int mouseY) {
         if (this.isListDisplayed()) {
+            poseStack.pushPose();
+            poseStack.translate(-gui.getGuiLeft(), -gui.getGuiTop(), 0.0);
             this.vaultblocktags$ghostIngredientDragManager.drawOnForeground(minecraft, poseStack, mouseX, mouseY);
+            poseStack.popPose();
         }
     }
 

@@ -5,8 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "vaultblocktags.refmap.json",
   "client": [
-    "jei.BookmarkOverlayMixin",
-    "jei.OverlayHelperMixin"
+    "jei.BookmarkOverlayMixin"
   ],
   "injectors": {
     "defaultRequire": 1

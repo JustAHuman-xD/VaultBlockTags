@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 
 @Mod("vaultblocktags")
 public class VaultBlockTags {
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public VaultBlockTags() {
 

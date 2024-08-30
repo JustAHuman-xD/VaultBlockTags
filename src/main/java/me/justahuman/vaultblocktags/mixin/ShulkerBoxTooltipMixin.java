@@ -1,7 +1,6 @@
 package me.justahuman.vaultblocktags.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import iskallia.vault.init.ModBlocks;
 import me.justahuman.vaultblocktags.VaultBlockTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
@@ -22,23 +21,20 @@ public class ShulkerBoxTooltipMixin {
 
     @Inject(method = "lambda$renderImage$0", at = @At("HEAD"))
     public void renderImage(int tooltipX, int tooltipY, Minecraft mc, PoseStack pose, IItemHandler capability, CallbackInfo ci) {
-        if (this.stack.getItem() == ModBlocks.VAULT_CRATE_BINGO_FULL.asItem()) {
-            int size = capability.getSlots();
-            int[] dims = new int[]{Math.min(size, 9), Math.max(size / 9, 1)};
-            VaultBlockTags.LOGGER.info(" ");
-            VaultBlockTags.LOGGER.info("bingo slots size: {}", size);
-            VaultBlockTags.LOGGER.info("bingo slots dims: {}", dims);
-            VaultBlockTags.LOGGER.info(" ");
-            for (int i = 0; i < TARGET_RATIOS.length; ++i) {
-                int[] ratio = TARGET_RATIOS[i];
-                VaultBlockTags.LOGGER.info("test ratio: {}", ratio);
-                if (ratio[0] * ratio[1] == size) {
-                    VaultBlockTags.LOGGER.info("overriding dims with test");
-                    VaultBlockTags.LOGGER.info(" ");
-                    break;
-                }
+        int size = capability.getSlots();
+        int[] dims = new int[]{Math.min(size, 9), Math.max(size / 9, 1)};
+        VaultBlockTags.LOGGER.info(" ");
+        VaultBlockTags.LOGGER.info("bingo slots size: {}", size);
+        VaultBlockTags.LOGGER.info("bingo slots dims: {}", dims);
+        VaultBlockTags.LOGGER.info(" ");
+        for (int[] ratio : TARGET_RATIOS) {
+            VaultBlockTags.LOGGER.info("test ratio: {}", ratio);
+            if (ratio[0] * ratio[1] == size) {
+                VaultBlockTags.LOGGER.info("overriding dims with test");
                 VaultBlockTags.LOGGER.info(" ");
+                break;
             }
+            VaultBlockTags.LOGGER.info(" ");
         }
     }
 }

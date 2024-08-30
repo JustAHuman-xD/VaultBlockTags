@@ -3,7 +3,11 @@ package me.justahuman.vaultblocktags.mixin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import me.justahuman.vaultblocktags.VaultBlockTags;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,9 +35,12 @@ public class ShulkerBoxTooltipMixin {
 
         int size = capability.getSlots();
         int[] dims = new int[]{Math.min(size, 9), Math.max(size / 9, 1)};
+        CompoundTag cmp = this.stack.getOrCreateTagElement("BlockEntityTag");
+        BlockEntity te = BlockEntity.loadStatic(BlockPos.ZERO, ((BlockItem)this.stack.getItem()).getBlock().defaultBlockState(), cmp);
         VaultBlockTags.LOGGER.info(" ");
         VaultBlockTags.LOGGER.info("bingo slots size: {}", size);
         VaultBlockTags.LOGGER.info("bingo slots dims: {}", dims);
+        VaultBlockTags.LOGGER.info("blockstate: {}", te.getClass().getSimpleName());
         VaultBlockTags.LOGGER.info("itemstack: {}", this.stack.serializeNBT().toString());
         VaultBlockTags.LOGGER.info(" ");
         for (int[] ratio : TARGET_RATIOS) {
@@ -45,6 +52,7 @@ public class ShulkerBoxTooltipMixin {
             }
             VaultBlockTags.LOGGER.info(" ");
         }
+        capability.getStackInSlot(28);
         logged = true;
     }
 }

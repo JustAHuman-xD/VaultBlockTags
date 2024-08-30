@@ -15,9 +15,9 @@ import vazkii.quark.content.client.tooltip.ShulkerBoxTooltips;
 @Mixin(ShulkerBoxTooltips.ShulkerComponent.class)
 public class ShulkerBoxTooltipMixin {
 
-    @Shadow @Final private ItemStack stack;
+    @Shadow(remap = false) @Final private ItemStack stack;
 
-    @ModifyConstant(method = "renderImage", constant = @Constant(stringValue = "minecraft:shulker_box"), remap = false)
+    @ModifyConstant(method = "renderImage", constant = @Constant(stringValue = "minecraft:shulker_box"))
     public String renderImage(String constant) {
         if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof VaultCrateBlock) {
             ResourceLocation registryName = stack.getItem().getRegistryName();

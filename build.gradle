@@ -85,6 +85,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:vault-hunters-official-mod-458203:${vault_hunters_version}")
     implementation fg.deobf("curse.maven:jei-238222:${jei_version}")
+    implementation fg.deobf("curse.maven:quark-243121:3840125")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

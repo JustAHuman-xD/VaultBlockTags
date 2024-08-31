@@ -20,12 +20,11 @@ public class VaultBlockTags {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public VaultBlockTags() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addListener(this::onClientSetup);
-        bus.register(this);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public void onClientSetup(FMLClientSetupEvent event) {
+    public void setup(FMLClientSetupEvent event) {
         MinecraftForgeClient.registerTooltipComponentFactory(VaultCrateTooltips.CrateComponent.class, Function.identity());
     }
 

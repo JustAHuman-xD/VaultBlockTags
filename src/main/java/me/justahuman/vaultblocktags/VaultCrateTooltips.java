@@ -27,13 +27,16 @@ public class VaultCrateTooltips {
 
     @OnlyIn(Dist.CLIENT)
     public static void makeTooltip(RenderTooltipEvent.GatherComponents event) {
+        VaultBlockTags.LOGGER.info("make tooltip");
         ItemStack itemStack = event.getItemStack();
         if (itemStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof VaultCrateBlock && Screen.hasShiftDown()) {
+            VaultBlockTags.LOGGER.info("passed checks");
             CompoundTag pTag = itemStack.getTag();
             if (pTag != null && pTag.contains("Items", 10)) {
                 NonNullList<ItemStack> itemStacks = NonNullList.withSize(pTag.getList("Items", 10).size(), ItemStack.EMPTY);
                 ContainerHelper.loadAllItems(pTag, itemStacks);
                 event.getTooltipElements().add(1, Either.right(new CrateComponent(itemStacks)));
+                VaultBlockTags.LOGGER.info("added components");
             }
         }
     }
@@ -43,6 +46,7 @@ public class VaultCrateTooltips {
         @Override
         @ParametersAreNonnullByDefault
         public void renderImage(Font font, int tooltipX, int tooltipY, PoseStack pose, ItemRenderer renderer, int pTicks) {
+            VaultBlockTags.LOGGER.info("render image");
             Minecraft minecraft = Minecraft.getInstance();
             int currentX = tooltipX;
             int currentY = tooltipY - 1;

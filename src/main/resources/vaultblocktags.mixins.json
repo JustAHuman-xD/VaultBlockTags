@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "vaultblocktags.refmap.json",
   "client": [
-    "ShulkerBoxTooltipMixin"
+    "ShulkerBoxTooltipMixin",
+    "VaultCrateTileEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

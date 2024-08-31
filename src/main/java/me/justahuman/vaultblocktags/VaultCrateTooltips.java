@@ -30,8 +30,8 @@ public class VaultCrateTooltips {
         ItemStack itemStack = event.getItemStack();
         if (itemStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof VaultCrateBlock && Screen.hasShiftDown()) {
             CompoundTag pTag = itemStack.getTagElement("BlockEntityTag");
-            if (pTag != null && pTag.contains("Items", 9)) {
-                NonNullList<ItemStack> itemStacks = NonNullList.withSize(pTag.getList("Items", 10).size(), ItemStack.EMPTY);
+            if (pTag != null && pTag.contains("Items", CompoundTag.TAG_LIST)) {
+                NonNullList<ItemStack> itemStacks = NonNullList.withSize(pTag.getList("Items", CompoundTag.TAG_COMPOUND).size(), ItemStack.EMPTY);
                 ContainerHelper.loadAllItems(pTag, itemStacks);
                 event.getTooltipElements().add(1, Either.right(new CrateComponent(itemStacks)));
             }

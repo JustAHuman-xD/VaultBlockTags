@@ -22,13 +22,15 @@ public class VaultBlockTags {
     public VaultBlockTags() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::onClientSetup);
-        bus.addListener(this::makeTooltip);
+        bus.register(this);
     }
 
     public void onClientSetup(FMLClientSetupEvent event) {
         MinecraftForgeClient.registerTooltipComponentFactory(VaultCrateTooltips.CrateComponent.class, Function.identity());
     }
 
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public void makeTooltip(RenderTooltipEvent.GatherComponents event) {
         VaultCrateTooltips.makeTooltip(event);
     }

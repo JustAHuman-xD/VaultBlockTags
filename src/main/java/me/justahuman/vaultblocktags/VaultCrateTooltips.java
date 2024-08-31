@@ -51,7 +51,15 @@ public class VaultCrateTooltips {
         }
     }
 
-    public record CrateComponent(NonNullList<ItemStack> itemStacks) implements ClientTooltipComponent, TooltipComponent {
+    public record CrateComponent(NonNullList<ItemStack> itemStacks, int width, int height) implements ClientTooltipComponent, TooltipComponent {
+
+        public CrateComponent(NonNullList<ItemStack> itemStacks) {
+            this(
+                    itemStacks,
+                    Math.min(itemStacks.size(), 9),
+                    (itemStacks.size() / 9) + (itemStacks.size() % 9 != 0 ? 1 : 0)
+            );
+        }
 
         @Override
         @ParametersAreNonnullByDefault
@@ -70,7 +78,7 @@ public class VaultCrateTooltips {
             pose.pushPose();
             pose.translate(0, 0, 700);
 
-            ShulkerBoxTooltips.ShulkerComponent.renderTooltipBackground(minecraft, pose, currentX, currentY, 9, 6, -1);
+            ShulkerBoxTooltips.ShulkerComponent.renderTooltipBackground(minecraft, pose, currentX, currentY, width, height, -1);
 
             for (int i = 0; i < itemStacks.size(); i++) {
                 ItemStack itemStack = itemStacks.get(i);
@@ -85,12 +93,12 @@ public class VaultCrateTooltips {
 
         @Override
         public int getHeight() {
-            return 119;
+            return 11 + this.height * 18;
         }
 
         @Override
         public int getWidth(@Nonnull Font font) {
-            return 171;
+            return 9 + this.width * 18;
         }
     }
 }

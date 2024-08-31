@@ -4,6 +4,8 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Either;
 import iskallia.vault.block.VaultCrateBlock;
+import iskallia.vault.container.oversized.OverSizedItemStack;
+import iskallia.vault.util.nbt.NBTHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
@@ -22,6 +24,8 @@ import vazkii.quark.content.client.tooltip.ShulkerBoxTooltips;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VaultCrateTooltips {
 
@@ -33,6 +37,15 @@ public class VaultCrateTooltips {
             if (pTag != null && pTag.contains("Items", CompoundTag.TAG_LIST)) {
                 NonNullList<ItemStack> itemStacks = NonNullList.withSize(pTag.getList("Items", CompoundTag.TAG_COMPOUND).size(), ItemStack.EMPTY);
                 ContainerHelper.loadAllItems(pTag, itemStacks);
+                event.getTooltipElements().add(1, Either.right(new CrateComponent(itemStacks)));
+            } else if (pTag != null && pTag.contains("items", CompoundTag.TAG_LIST)) {
+                List<OverSizedItemStack> items = new ArrayList<>();
+                NBTHelper.readCollection(pTag, "items", CompoundTag.class, OverSizedItemStack::deserialize, items);
+                NonNullList<ItemStack> itemStacks = NonNullList.withSize(items.size(), ItemStack.EMPTY);
+                for (int i = 0; i < items.size(); i++) {
+                    OverSizedItemStack overSized = items.get(i);
+                    itemStacks.set(i, overSized.overSizedStack());
+                }
                 event.getTooltipElements().add(1, Either.right(new CrateComponent(itemStacks)));
             }
         }

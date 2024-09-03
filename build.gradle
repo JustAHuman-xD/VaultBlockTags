@@ -20,7 +20,7 @@ loom {
 
     forge {
         mixinConfigs = [
-                "vaultblocktags.mixins.json"
+                "vault_keybinds.mixins.json"
         ]
     }
 }
@@ -35,8 +35,6 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 
     modImplementation "curse.maven:vault-hunters-official-mod-458203:${vault_hunters_version}"
-    modImplementation "curse.maven:jei-238222:${jei_version}"
-    modImplementation "curse.maven:quark-243121:3840125"
 }
 
 processResources {

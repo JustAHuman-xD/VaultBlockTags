@@ -36,7 +36,9 @@ dependencies {
 
     modImplementation "curse.maven:vault-hunters-official-mod-458203:${vault_hunters_version}"
     modImplementation "curse.maven:jei-238222:${jei_version}"
-    modImplementation "curse.maven:quark-243121:3840125"
+    modImplementation "curse.maven:quark-243121:${quark_version}"
+    modImplementation "curse.maven:patchouli-306770:${patchouli_version}"
+    modImplementation "curse.maven:every-compat-628539:${every_compat_version}"
 }
 
 processResources {

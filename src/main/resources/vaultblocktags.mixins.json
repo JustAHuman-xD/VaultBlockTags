@@ -5,6 +5,15 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "vaultblocktags.refmap.json",
   "client": [
+    "everycomp.MDoorsModuleMixin",
+    "forge.GameDataMixin",
+    "jei.PluginCallerMixin",
+    "patchouli.DoubleRecipeMixin",
+    "quark.FinderMixin",
+    "quark.LoaderMixin",
+    "quark.ModuleMixin",
+    "vault.AtlasHolderMixin",
+    "vault.ConfigMixin"
   ],
   "injectors": {
     "defaultRequire": 1

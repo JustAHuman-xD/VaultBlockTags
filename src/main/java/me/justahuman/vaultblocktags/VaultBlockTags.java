@@ -25,6 +25,7 @@ public class VaultBlockTags {
 
     public void setup(FMLClientSetupEvent event) {
         MinecraftForgeClient.registerTooltipComponentFactory(VaultCrateTooltips.CrateComponent.class, Function.identity());
+        MinecraftForgeClient.registerTooltipComponentFactory(RippedPackTooltips.PackOutcomesComponent.class, Function.identity());
     }
 
     @SubscribeEvent

@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "vaultblocktags.refmap.json",
   "client": [
+    "CardColorAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

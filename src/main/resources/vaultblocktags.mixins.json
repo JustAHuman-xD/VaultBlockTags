@@ -3,11 +3,11 @@
   "minVersion": "0.8",
   "package": "me.justahuman.vaultblocktags.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "vaultblocktags.refmap.json",
   "client": [
     "everycomp.MDoorsModuleMixin",
     "forge.GameDataMixin",
     "jei.PluginCallerMixin",
+    "minecraft.LootManagerMixin",
     "patchouli.DoubleRecipeMixin",
     "quark.FinderMixin",
     "quark.LoaderMixin",

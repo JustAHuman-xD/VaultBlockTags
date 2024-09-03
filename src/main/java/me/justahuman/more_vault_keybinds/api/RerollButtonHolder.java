@@ -1,7 +1,7 @@
-package me.justahuman.vault_keybinds.api;
+package me.justahuman.more_vault_keybinds.api;
 
 import iskallia.vault.client.gui.framework.element.ButtonElement;
 
 public interface RerollButtonHolder {
-    ButtonElement<?> vault_keybinds$getRerollButton();
+    ButtonElement<?> more_vault_keybinds$getRerollButton();
 }

@@ -1,9 +1,8 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "me.justahuman.vault_keybinds.mixin",
+  "package": "me.justahuman.more_vault_keybinds.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "vault_keybinds.refmap.json",
   "client": [
     "BountyContainerAccessor",
     "BountyContainerMixin",

@@ -20,7 +20,7 @@ loom {
 
     forge {
         mixinConfigs = [
-                "vault_keybinds.mixins.json"
+                "${mod_id}.mixins.json"
         ]
     }
 }

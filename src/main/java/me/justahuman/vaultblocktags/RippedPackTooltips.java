@@ -78,12 +78,12 @@ public class RippedPackTooltips {
 
         @Override
         public int getHeight() {
-            return 0;
+            return this.height;
         }
 
         @Override
         public int getWidth(@Nonnull TextRenderer textRenderer) {
-            return 0;
+            return this.width;
         }
     }
 }

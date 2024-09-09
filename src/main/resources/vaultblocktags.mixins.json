@@ -4,6 +4,7 @@
   "package": "me.justahuman.vaultblocktags.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
+    "CardEntryAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

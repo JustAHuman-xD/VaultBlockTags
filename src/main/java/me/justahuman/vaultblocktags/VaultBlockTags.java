@@ -80,7 +80,7 @@ public class VaultBlockTags {
 
             JsonObject tags = config.getAsJsonObject("tags");
             for (String key : tags.keySet()) {
-                if (!key.equals("all_themes") && VaultRegistry.THEME.getKey(key) == null) {
+                if (!key.equals("all_themes") && VaultRegistry.THEME.getKey("the_vault:" + key) == null) {
                     LOGGER.warn("Unknown theme key: {}", key);
                     continue;
                 }

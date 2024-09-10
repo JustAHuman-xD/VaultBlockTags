@@ -92,9 +92,11 @@ public class RippedPackTooltips {
 
                 List<String> groups = new ArrayList<>(card.getGroups());
                 List<String> types = new ArrayList<>();
-                groups.stream().filter(Card.TYPES::contains).forEach(group -> {
-                    groups.remove(group);
-                    types.add(group);
+                Card.TYPES.forEach(type -> {
+                    if (groups.contains(type)) {
+                        groups.remove(type);
+                        types.add(type);
+                    }
                 });
 
                 if (!types.isEmpty()) {
@@ -121,17 +123,23 @@ public class RippedPackTooltips {
                     CardCondition condition = ((CardEntryAccessor) entry).getCondition();
                     List<Text> dummy = new ArrayList<>();
 
-                    modifier.addText(dummy, 0, context, 0, tier);
-                    lines.addAll(dummy);
-                    dummy.clear();
+                    if (modifier != null) {
+                        modifier.addText(dummy, 0, context, 0, tier);
+                        lines.addAll(dummy);
+                        dummy.clear();
+                    }
 
-                    scaler.addText(dummy, 0, context, 0, tier);
-                    lines.addAll(segmentText(textRenderer, dummy.toArray(Text[]::new)));
-                    dummy.clear();
+                    if (scaler != null) {
+                        scaler.addText(dummy, 0, context, 0, tier);
+                        lines.addAll(segmentText(textRenderer, dummy.toArray(Text[]::new)));
+                        dummy.clear();
+                    }
 
-                    condition.addText(dummy, 0, context, 0, tier);
-                    lines.addAll(segmentText(textRenderer, dummy.toArray(Text[]::new)));
-                    dummy.clear();
+                    if (condition != null) {
+                        condition.addText(dummy, 0, context, 0, tier);
+                        lines.addAll(segmentText(textRenderer, dummy.toArray(Text[]::new)));
+                        dummy.clear();
+                    }
                 }
 
                 for (Text line : lines) {

@@ -46,6 +46,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Mod("vaultblocktags")
 public class VaultBlockTags {
@@ -137,7 +138,7 @@ public class VaultBlockTags {
         }
 
         JsonArray serialized = new JsonArray();
-        for (Item item : allHolders.stream().map(Holder::value).toList()) {
+        for (Item item : allHolders.stream().map(Holder::value).collect(Collectors.toSet())) {
             ResourceLocation registryName = item.getRegistryName();
             if (registryName != null) {
                 serialized.add(registryName.toString());

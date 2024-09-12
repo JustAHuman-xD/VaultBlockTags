@@ -3,13 +3,10 @@
   "minVersion": "0.8",
   "package": "me.justahuman.vaultblocktags.mixin",
   "compatibilityLevel": "JAVA_8",
-  "client": [
+  "mixins": [
+    "CardDeckItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "mixins": [
-    "CardDeckContainerMenuMixin",
-    "CardDeckItemMixin"
-  ]
+  }
 }

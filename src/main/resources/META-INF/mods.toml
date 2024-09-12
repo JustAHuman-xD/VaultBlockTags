@@ -6,7 +6,8 @@ license = "${mod_license}"
 modId = "${mod_id}"
 version = "${mod_version}"
 displayName = "${mod_name}"
-displayURL = "https://github.com/JustAHuman-xD/VaultBlockTags"
+displayURL = "https://github.com/JustAHuman-xD/LogJanitor"
+logoFile = "icon.png"
 authors = "${mod_authors}"
 description = '''${mod_description}'''
 

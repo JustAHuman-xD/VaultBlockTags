@@ -1,4 +1,4 @@
-package me.justahuman.vaultblocktags.mixin.vault;
+package me.justahuman.logjanitor.mixin.vault;
 
 import iskallia.vault.client.atlas.AbstractTextureAtlasHolder;
 import org.apache.logging.log4j.Logger;

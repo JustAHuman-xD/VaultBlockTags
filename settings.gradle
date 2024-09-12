@@ -7,4 +7,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'vaultblocktags'
+rootProject.name = 'LogJanitor'

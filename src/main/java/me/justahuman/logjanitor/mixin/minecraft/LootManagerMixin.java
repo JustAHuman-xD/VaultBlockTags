@@ -1,4 +1,4 @@
-package me.justahuman.vaultblocktags.mixin.minecraft;
+package me.justahuman.logjanitor.mixin.minecraft;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;

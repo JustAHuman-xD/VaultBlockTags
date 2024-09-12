@@ -1,4 +1,4 @@
-package me.justahuman.vaultblocktags.mixin.quark;
+package me.justahuman.logjanitor.mixin.quark;
 
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;

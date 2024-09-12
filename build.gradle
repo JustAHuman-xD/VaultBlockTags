@@ -20,7 +20,7 @@ loom {
 
     forge {
         mixinConfigs = [
-                "vaultblocktags.mixins.json"
+                "logjanitor.mixins.json"
         ]
     }
 }

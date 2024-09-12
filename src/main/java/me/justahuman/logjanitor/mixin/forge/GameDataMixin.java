@@ -1,4 +1,4 @@
-package me.justahuman.vaultblocktags.mixin.forge;
+package me.justahuman.logjanitor.mixin.forge;
 
 import net.minecraftforge.registries.GameData;
 import org.apache.logging.log4j.Logger;

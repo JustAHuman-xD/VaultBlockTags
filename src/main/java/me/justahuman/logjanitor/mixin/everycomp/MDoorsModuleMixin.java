@@ -1,4 +1,4 @@
-package me.justahuman.vaultblocktags.mixin.everycomp;
+package me.justahuman.logjanitor.mixin.everycomp;
 
 import net.mehvahdjukaar.every_compat.modules.mcaw.MacawDoorsModule;
 import org.spongepowered.asm.mixin.Mixin;

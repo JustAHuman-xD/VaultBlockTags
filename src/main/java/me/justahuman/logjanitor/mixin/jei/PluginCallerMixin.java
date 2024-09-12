@@ -1,4 +1,4 @@
-package me.justahuman.vaultblocktags.mixin.jei;
+package me.justahuman.logjanitor.mixin.jei;
 
 import mezz.jei.common.load.PluginCaller;
 import org.apache.logging.log4j.Logger;

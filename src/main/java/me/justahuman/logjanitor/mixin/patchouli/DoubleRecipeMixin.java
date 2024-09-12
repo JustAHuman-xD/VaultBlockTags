@@ -1,4 +1,4 @@
-package me.justahuman.vaultblocktags.mixin.patchouli;
+package me.justahuman.logjanitor.mixin.patchouli;
 
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;

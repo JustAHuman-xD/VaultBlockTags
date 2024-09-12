@@ -187,16 +187,10 @@ public class VaultBlockTags {
     public static void handleTileProcessors(String id, Set<Item> items, Iterable<TileProcessor> processors) {
         for (TileProcessor tileProcessor : processors) {
             if (tileProcessor instanceof WeightedTileProcessor weighted) {
-                for (PartialTile tile : weighted.getOutput().keySet()) {
-                    tile.getState().getBlock().asWhole().map(Block::asItem).ifPresent(items::add);
-                }
+                handlePartialTiles(id, items, weighted.getOutput().keySet());
             } else if (tileProcessor instanceof BernoulliWeightedTileProcessor bernoulli) {
-                for (PartialTile tile : bernoulli.success.keySet()) {
-                    tile.getState().getBlock().asWhole().map(Block::asItem).ifPresent(items::add);
-                }
-                for (PartialTile tile : bernoulli.failure.keySet()) {
-                    tile.getState().getBlock().asWhole().map(Block::asItem).ifPresent(items::add);
-                }
+                handlePartialTiles(id, items, bernoulli.success.keySet());
+                handlePartialTiles(id, items, bernoulli.failure.keySet());
             } else if (tileProcessor instanceof ReferenceTileProcessor reference) {
                 PaletteKey referenceKey = VaultRegistry.PALETTE.getKey(reference.getId());
                 if (referenceKey != null) {
@@ -207,6 +201,12 @@ public class VaultBlockTags {
             } else if (tileProcessor instanceof LeveledTileProcessor leveled) {
                 handleTileProcessors(id, items, leveled.levels.values());
             }
+        }
+    }
+
+    public static void handlePartialTiles(String id, Set<Item> items, Iterable<PartialTile> tiles) {
+        for (PartialTile tile : tiles) {
+            tile.getState().getBlock().asWhole().map(Block::asItem).ifPresent(items::add);
         }
     }
 

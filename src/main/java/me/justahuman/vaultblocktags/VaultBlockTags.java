@@ -33,6 +33,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
@@ -57,7 +58,7 @@ public class VaultBlockTags {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
     }
 
-    public void setup(FMLClientSetupEvent event) {
+    public void setup(FMLLoadCompleteEvent event) {
         loadTags();
     }
 

@@ -1,7 +1,7 @@
-package me.justahuman.vaultblocktags.mixin;
+package me.justahuman.vault_deck_cache.mixin;
 
 import iskallia.vault.container.inventory.CardDeckContainerMenu;
-import me.justahuman.vaultblocktags.VaultBlockTags;
+import me.justahuman.vault_deck_cache.VaultDeckCache;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
@@ -17,6 +17,6 @@ public abstract class CardDeckContainerMenuMixin extends ScreenHandler {
     @Override
     public void close(PlayerEntity player) {
         super.close(player);
-        VaultBlockTags.DECK_MODIFIER_CACHE.remove(player.getUuid());
+        VaultDeckCache.DECK_MODIFIER_CACHE.remove(player.getUuid());
     }
 }

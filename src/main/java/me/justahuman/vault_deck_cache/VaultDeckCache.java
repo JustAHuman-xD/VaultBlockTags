@@ -1,4 +1,4 @@
-package me.justahuman.vaultblocktags;
+package me.justahuman.vault_deck_cache;
 
 import com.google.common.collect.Multimap;
 import com.mojang.logging.LogUtils;
@@ -16,12 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Mod("vaultblocktags")
-public class VaultBlockTags {
+@Mod("vault_deck_cache")
+public class VaultDeckCache {
     public static final Map<UUID, Multimap<EntityAttribute, EntityAttributeModifier>> DECK_MODIFIER_CACHE = new HashMap<>();
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public VaultBlockTags() {
+    public VaultDeckCache() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
     }

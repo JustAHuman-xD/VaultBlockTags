@@ -50,23 +50,19 @@ public class VaultDeckCache {
 
     public static class DataCache {
         private final CardDeckGearData data;
-        private long lastAccessed;
+        private long lastAccessed = System.currentTimeMillis();
 
-        public DataCache(CardDeckGearData data, long lastAccessed) {
+        public DataCache(CardDeckGearData data) {
             this.data = data;
-            this.lastAccessed = lastAccessed;
         }
 
         public CardDeckGearData data() {
-            return data;
+            this.lastAccessed = System.currentTimeMillis();
+            return this.data;
         }
 
         public long accessed() {
-            return lastAccessed;
-        }
-
-        public void access() {
-            lastAccessed = System.currentTimeMillis();
+            return this.lastAccessed;
         }
     }
 }

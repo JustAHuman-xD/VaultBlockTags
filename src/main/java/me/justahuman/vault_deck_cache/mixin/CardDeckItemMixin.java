@@ -51,7 +51,6 @@ public class CardDeckItemMixin {
         int hashCode = stack.hashCode();
         VaultDeckCache.DataCache cache = VaultDeckCache.DECK_DATA_CACHE.get(hashCode);
         if (cache != null) {
-            cache.access();
             cir.setReturnValue(Optional.of(((CardDataAccessor) cache.data()).getDeck()));
         } else if (AttributeGearData.read(stack) instanceof CardDeckGearData cardData) {
             cir.setReturnValue(Optional.of(((CardDataAccessor) cardData).getDeck()));

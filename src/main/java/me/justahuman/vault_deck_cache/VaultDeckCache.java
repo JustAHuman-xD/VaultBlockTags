@@ -2,6 +2,7 @@ package me.justahuman.vault_deck_cache;
 
 import com.google.common.collect.Multimap;
 import com.mojang.logging.LogUtils;
+import iskallia.vault.core.card.CardDeck;
 import iskallia.vault.gear.data.CardDeckGearData;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -49,16 +50,16 @@ public class VaultDeckCache {
     }
 
     public static class DataCache {
-        private final CardDeckGearData data;
+        private final CardDeck deck;
         private long lastAccessed = System.currentTimeMillis();
 
-        public DataCache(CardDeckGearData data) {
-            this.data = data;
+        public DataCache(CardDeck deck) {
+            this.deck = deck;
         }
 
-        public CardDeckGearData data() {
+        public CardDeck deck() {
             this.lastAccessed = System.currentTimeMillis();
-            return this.data;
+            return this.deck;
         }
 
         public long accessed() {

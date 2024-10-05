@@ -51,9 +51,15 @@ public class CardDeckItemMixin {
         int hashCode = stack.hashCode();
         VaultDeckCache.DataCache cache = VaultDeckCache.DECK_DATA_CACHE.get(hashCode);
         if (cache != null) {
-            cir.setReturnValue(Optional.of(((CardDataAccessor) cache.data()).getDeck()));
-        } else if (AttributeGearData.read(stack) instanceof CardDeckGearData cardData) {
-            cir.setReturnValue(Optional.of(((CardDataAccessor) cardData).getDeck()));
+            cir.setReturnValue(Optional.of(cache.deck()));
+        }
+    }
+
+    @Inject(at = @At("RETURN"), method = "getCardDeck", remap = false)
+    private static void getCardDeckReturn(ItemStack stack, CallbackInfoReturnable<Optional<CardDeck>> cir) {
+        int hashCode = stack.hashCode();
+        if (!VaultDeckCache.DECK_DATA_CACHE.containsKey(hashCode)) {
+            cir.getReturnValue().ifPresent(cardDeck -> VaultDeckCache.DECK_DATA_CACHE.put(hashCode, new VaultDeckCache.DataCache(cardDeck)));
         }
     }
 

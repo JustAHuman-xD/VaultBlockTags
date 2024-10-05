@@ -4,8 +4,6 @@
   "package": "me.justahuman.vault_deck_cache.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "AttributeGearDataMixin",
-    "CardDataAccessor",
     "CardDeckContainerMenuMixin",
     "CardDeckItemMixin"
   ],

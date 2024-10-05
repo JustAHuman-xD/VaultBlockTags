@@ -3,7 +3,6 @@ package me.justahuman.vault_deck_cache;
 import com.google.common.collect.Multimap;
 import com.mojang.logging.LogUtils;
 import iskallia.vault.core.card.CardDeck;
-import iskallia.vault.gear.data.CardDeckGearData;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraftforge.common.MinecraftForge;

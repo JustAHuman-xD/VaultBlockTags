@@ -6,8 +6,6 @@ import iskallia.vault.core.card.CardDeck;
 import iskallia.vault.gear.VaultGearHelper;
 import iskallia.vault.gear.data.AttributeGearData;
 import iskallia.vault.gear.data.CardDeckGearData;
-import iskallia.vault.gear.data.GearDataCache;
-import iskallia.vault.gear.data.VaultGearData;
 import iskallia.vault.item.CardDeckItem;
 import me.justahuman.vault_deck_cache.VaultDeckCache;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -66,5 +64,10 @@ public class CardDeckItemMixin {
     @Inject(at = @At("HEAD"), method = "setCardDeck", remap = false)
     private static void setCardDeck(ItemStack stack, CardDeck card, CallbackInfoReturnable<CardDeck> cir) {
         VaultDeckCache.DECK_DATA_CACHE.remove(stack.hashCode());
+    }
+
+    @Inject(at = @At("RETURN"), method = "setCardDeck", remap = false)
+    private static void setCardDeckReturn(ItemStack stack, CardDeck card, CallbackInfoReturnable<CardDeck> cir) {
+        VaultDeckCache.DECK_DATA_CACHE.put(stack.hashCode(), new VaultDeckCache.DataCache(card));
     }
 }

@@ -28,7 +28,7 @@ public class VaultDeckCache {
     }
 
     public void setup(FMLClientSetupEvent event) {
-
+        LOGGER.info("Started VaultDeckCache");
     }
 
     @SubscribeEvent

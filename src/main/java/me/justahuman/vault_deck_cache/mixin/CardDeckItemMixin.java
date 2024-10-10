@@ -63,11 +63,9 @@ public class CardDeckItemMixin {
 
     @Inject(at = @At("HEAD"), method = "setCardDeck", remap = false)
     private static void setCardDeck(ItemStack stack, CardDeck card, CallbackInfoReturnable<CardDeck> cir) {
-        card.writeNbt().ifPresent(nbt -> {
-            int hashCode = stack.hashCode();
-            VaultDeckCache.DECK_CACHE.remove(hashCode);
-            VaultDeckCache.DECK_MODIFIER_CACHE.remove(hashCode);
-        });
+        int hashCode = stack.hashCode();
+        VaultDeckCache.DECK_CACHE.remove(hashCode);
+        VaultDeckCache.DECK_MODIFIER_CACHE.remove(hashCode);
     }
 
     @Inject(at = @At("RETURN"), method = "setCardDeck", remap = false)

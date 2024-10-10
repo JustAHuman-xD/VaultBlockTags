@@ -7,6 +7,7 @@ import iskallia.vault.gear.VaultGearHelper;
 import iskallia.vault.gear.data.AttributeGearData;
 import iskallia.vault.gear.data.CardDeckGearData;
 import iskallia.vault.item.CardDeckItem;
+import iskallia.vault.world.data.CardTaskData;
 import me.justahuman.vault_deck_cache.TimedCache;
 import me.justahuman.vault_deck_cache.VaultDeckCache;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -49,7 +50,13 @@ public class CardDeckItemMixin {
         int hashCode = stack.hashCode();
         TimedCache<CardDeck> cache = VaultDeckCache.DECK_CACHE.get(hashCode);
         if (cache != null) {
-            cir.setReturnValue(Optional.of(cache.value()));
+            CardDeck deck = cache.value();
+            if (deck.getUuid() == null) {
+                VaultDeckCache.DECK_CACHE.remove(hashCode);
+                VaultDeckCache.DECK_MODIFIER_CACHE.remove(hashCode);
+                return;
+            }
+            cir.setReturnValue(Optional.of(deck));
         }
     }
 

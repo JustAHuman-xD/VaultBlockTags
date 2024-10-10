@@ -7,6 +7,7 @@ import iskallia.vault.gear.VaultGearHelper;
 import iskallia.vault.gear.data.AttributeGearData;
 import iskallia.vault.gear.data.CardDeckGearData;
 import iskallia.vault.item.CardDeckItem;
+import me.justahuman.vault_deck_cache.ExpiringCache;
 import me.justahuman.vault_deck_cache.VaultDeckCache;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -24,50 +25,56 @@ import java.util.UUID;
 
 @Mixin(CardDeckItem.class)
 public class CardDeckItemMixin {
-    @Unique private static final Multimap<EntityAttribute, EntityAttributeModifier> vaultDeckCache$EMPTY = ImmutableMultimap.of();
+    @Unique private static final Multimap<EntityAttribute, EntityAttributeModifier> vaultDeckCache$EMPTY_MODIFIERS = ImmutableMultimap.of();
 
     @Inject(at = @At("HEAD"), method = "getAttributeModifiers", cancellable = true, remap = false)
     public void getModifiers(SlotContext context, UUID uuid, ItemStack stack, CallbackInfoReturnable<Multimap<EntityAttribute, EntityAttributeModifier>> cir) {
         if (context.entity() instanceof PlayerEntity player && player.getItemCooldownManager().isCoolingDown(stack.getItem())) {
-            cir.setReturnValue(vaultDeckCache$EMPTY);
+            cir.setReturnValue(vaultDeckCache$EMPTY_MODIFIERS);
             return;
         }
 
-        UUID entityUuid = context.entity().getUuid();
-        var cache = VaultDeckCache.DECK_MODIFIER_CACHE.get(entityUuid);
+        var cache = VaultDeckCache.DECK_MODIFIER_CACHE.get(stack.hashCode());
         if (cache != null) {
-            cir.setReturnValue(cache);
+            cir.setReturnValue(cache.value());
         } else if (AttributeGearData.read(stack) instanceof CardDeckGearData cardData) {
-            cache = VaultGearHelper.getModifiers(cardData);
-            VaultDeckCache.DECK_MODIFIER_CACHE.put(entityUuid, cache);
-            cir.setReturnValue(cache);
+            cache = new ExpiringCache<>(VaultGearHelper.getModifiers(cardData));
+            VaultDeckCache.DECK_MODIFIER_CACHE.put(stack.hashCode(), cache);
+            cir.setReturnValue(cache.value());
         }
     }
 
     @Inject(at = @At("HEAD"), method = "getCardDeck", cancellable = true, remap = false)
     private static void getCardDeck(ItemStack stack, CallbackInfoReturnable<Optional<CardDeck>> cir) {
         int hashCode = stack.hashCode();
-        VaultDeckCache.DataCache cache = VaultDeckCache.DECK_DATA_CACHE.get(hashCode);
+        ExpiringCache<CardDeck> cache = VaultDeckCache.DECK_CACHE.get(hashCode);
         if (cache != null) {
-            cir.setReturnValue(Optional.of(cache.deck()));
+            cir.setReturnValue(Optional.of(cache.value()));
         }
     }
 
     @Inject(at = @At("RETURN"), method = "getCardDeck", remap = false)
     private static void getCardDeckReturn(ItemStack stack, CallbackInfoReturnable<Optional<CardDeck>> cir) {
         int hashCode = stack.hashCode();
-        if (!VaultDeckCache.DECK_DATA_CACHE.containsKey(hashCode)) {
-            cir.getReturnValue().ifPresent(cardDeck -> VaultDeckCache.DECK_DATA_CACHE.put(hashCode, new VaultDeckCache.DataCache(cardDeck)));
+        if (!VaultDeckCache.DECK_CACHE.containsKey(hashCode)) {
+            cir.getReturnValue().ifPresent(cardDeck -> VaultDeckCache.DECK_CACHE.put(hashCode, new ExpiringCache<>(cardDeck)));
         }
     }
 
     @Inject(at = @At("HEAD"), method = "setCardDeck", remap = false)
     private static void setCardDeck(ItemStack stack, CardDeck card, CallbackInfoReturnable<CardDeck> cir) {
-        VaultDeckCache.DECK_DATA_CACHE.remove(stack.hashCode());
+        card.writeNbt().ifPresent(nbt -> {
+            int hashCode = stack.hashCode();
+            VaultDeckCache.DECK_CACHE.remove(hashCode);
+            VaultDeckCache.DECK_MODIFIER_CACHE.remove(hashCode);
+        });
     }
 
     @Inject(at = @At("RETURN"), method = "setCardDeck", remap = false)
     private static void setCardDeckReturn(ItemStack stack, CardDeck card, CallbackInfoReturnable<CardDeck> cir) {
-        VaultDeckCache.DECK_DATA_CACHE.put(stack.hashCode(), new VaultDeckCache.DataCache(card));
+        int hashCode = stack.hashCode();
+        if (!VaultDeckCache.DECK_CACHE.containsKey(hashCode)) {
+            VaultDeckCache.DECK_CACHE.put(hashCode, new ExpiringCache<>(card));
+        }
     }
 }

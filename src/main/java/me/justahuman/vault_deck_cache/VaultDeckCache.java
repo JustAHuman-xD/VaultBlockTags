@@ -18,8 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Mod("vault_deck_cache")
 public class VaultDeckCache {
-    public static final Map<Integer, ExpiringCache<Multimap<EntityAttribute, EntityAttributeModifier>>> DECK_MODIFIER_CACHE = new ConcurrentHashMap<>();
-    public static final Map<Integer, ExpiringCache<CardDeck>> DECK_CACHE = new ConcurrentHashMap<>();
+    public static final Map<Integer, TimedCache<Multimap<EntityAttribute, EntityAttributeModifier>>> DECK_MODIFIER_CACHE = new ConcurrentHashMap<>();
+    public static final Map<Integer, TimedCache<CardDeck>> DECK_CACHE = new ConcurrentHashMap<>();
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public VaultDeckCache() {

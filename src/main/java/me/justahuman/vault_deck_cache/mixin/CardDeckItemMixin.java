@@ -7,7 +7,7 @@ import iskallia.vault.gear.VaultGearHelper;
 import iskallia.vault.gear.data.AttributeGearData;
 import iskallia.vault.gear.data.CardDeckGearData;
 import iskallia.vault.item.CardDeckItem;
-import me.justahuman.vault_deck_cache.ExpiringCache;
+import me.justahuman.vault_deck_cache.TimedCache;
 import me.justahuman.vault_deck_cache.VaultDeckCache;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -38,7 +38,7 @@ public class CardDeckItemMixin {
         if (cache != null) {
             cir.setReturnValue(cache.value());
         } else if (AttributeGearData.read(stack) instanceof CardDeckGearData cardData) {
-            cache = new ExpiringCache<>(VaultGearHelper.getModifiers(cardData));
+            cache = new TimedCache<>(VaultGearHelper.getModifiers(cardData));
             VaultDeckCache.DECK_MODIFIER_CACHE.put(stack.hashCode(), cache);
             cir.setReturnValue(cache.value());
         }
@@ -47,7 +47,7 @@ public class CardDeckItemMixin {
     @Inject(at = @At("HEAD"), method = "getCardDeck", cancellable = true, remap = false)
     private static void getCardDeck(ItemStack stack, CallbackInfoReturnable<Optional<CardDeck>> cir) {
         int hashCode = stack.hashCode();
-        ExpiringCache<CardDeck> cache = VaultDeckCache.DECK_CACHE.get(hashCode);
+        TimedCache<CardDeck> cache = VaultDeckCache.DECK_CACHE.get(hashCode);
         if (cache != null) {
             cir.setReturnValue(Optional.of(cache.value()));
         }
@@ -57,7 +57,7 @@ public class CardDeckItemMixin {
     private static void getCardDeckReturn(ItemStack stack, CallbackInfoReturnable<Optional<CardDeck>> cir) {
         int hashCode = stack.hashCode();
         if (!VaultDeckCache.DECK_CACHE.containsKey(hashCode)) {
-            cir.getReturnValue().ifPresent(cardDeck -> VaultDeckCache.DECK_CACHE.put(hashCode, new ExpiringCache<>(cardDeck)));
+            cir.getReturnValue().ifPresent(cardDeck -> VaultDeckCache.DECK_CACHE.put(hashCode, new TimedCache<>(cardDeck)));
         }
     }
 
@@ -72,7 +72,7 @@ public class CardDeckItemMixin {
     private static void setCardDeckReturn(ItemStack stack, CardDeck card, CallbackInfoReturnable<CardDeck> cir) {
         int hashCode = stack.hashCode();
         if (!VaultDeckCache.DECK_CACHE.containsKey(hashCode)) {
-            VaultDeckCache.DECK_CACHE.put(hashCode, new ExpiringCache<>(card));
+            VaultDeckCache.DECK_CACHE.put(hashCode, new TimedCache<>(card));
         }
     }
 }

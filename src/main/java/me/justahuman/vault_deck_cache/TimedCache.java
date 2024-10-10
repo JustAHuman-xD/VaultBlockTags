@@ -1,10 +1,10 @@
 package me.justahuman.vault_deck_cache;
 
-public class ExpiringCache<V> {
+public class TimedCache<V> {
     private final V value;
     private long lastAccessed = System.currentTimeMillis();
 
-    public ExpiringCache(V value) {
+    public TimedCache(V value) {
         this.value = value;
     }
 

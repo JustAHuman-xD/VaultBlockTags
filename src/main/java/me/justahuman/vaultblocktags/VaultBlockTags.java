@@ -32,7 +32,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
@@ -193,10 +192,13 @@ public class VaultBlockTags {
                 handlePartialTiles(id, items, bernoulli.success.keySet());
                 handlePartialTiles(id, items, bernoulli.failure.keySet());
             } else if (tileProcessor instanceof ReferenceTileProcessor reference) {
-                PaletteKey referenceKey = VaultRegistry.PALETTE.getKey(reference.getId());
-                if (referenceKey != null) {
-                    handlePaletteKey(id, items, referenceKey);
+                for (ResourceLocation paletteId : reference.getPool().keySet()) {
+                    PaletteKey referenceKey = VaultRegistry.PALETTE.getKey(paletteId);
+                    if (referenceKey != null) {
+                        handlePaletteKey(id, items, referenceKey);
+                    }
                 }
+
             } else if (tileProcessor instanceof VaultLootTileProcessor loot) {
                 handleTileProcessors(id, items, loot.levels.values());
             } else if (tileProcessor instanceof LeveledTileProcessor leveled) {
